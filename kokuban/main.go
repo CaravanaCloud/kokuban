@@ -3,13 +3,25 @@ package main
 import (
 	"strings"
 
-	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-var pathHandlers = map[string]func(map[string]interface{}) (string, string, error){
-	"uala": uala,
+type AppResponse struct {
+	Body        string
+	ContentType string
 }
+
+type AppRequest struct {
+}
+
+type Path = string
+
+// TODO: Map path handlers
+// var pathHandlers = map[Path]func(request AppRequest) (AppResponse, error){
+//	"uala": uala,
+// }
 
 func getPathHead(path string) string {
 	// Remove leading '/'
@@ -24,32 +36,12 @@ func getPathHead(path string) string {
 	return trimmedPath
 }
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	pathHead := getPathHead(request.Path)
-	requestData := make(map[string]interface{})
-
-	handlerFunc, exists := pathHandlers[pathHead]
-	if !exists {
-		handlerFunc = fallback
-	}
-
-	contentType, body, err := handlerFunc(requestData)
-	var statusCode int
-	if err == nil {
-		statusCode = 200
-	} else {
-		statusCode = 500
-	}
-
-	return events.APIGatewayProxyResponse{
-		Body:       body,
-		StatusCode: statusCode,
-		Headers: map[string]string{
-			"Content-Type": contentType,
-		},
-	}, nil
-}
-
 func main() {
-	lambda.Start(handler)
+	r := gin.Default()
+	r.GET("/uala", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

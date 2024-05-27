@@ -1,5 +1,6 @@
 package main
 
-func uala(data map[string]interface{}) (string, string, error) {
-	return "text/html", "<h1>Uala</h1>", nil
+func uala(request AppRequest) (AppResponse, error) {
+	result := html("<h1>UALA!</h1s>")
+	return result, nil
 }
