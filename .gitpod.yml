@@ -1,7 +1,7 @@
 image:
   file: .gitpod.Containerfile
 
-  ports:
-    - port: 3000
-      visibility: public
-      onOpen: ignore
+ports:
+  - port: 3000
+    visibility: public
+    onOpen: ignore
