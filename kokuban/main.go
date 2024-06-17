@@ -38,7 +38,8 @@ func getPathHead(path string) string {
 
 func main() {
 	r := gin.Default()
-	r.GET("/uala", func(c *gin.Context) {
+	r.NoRoute( func(c *gin.Context) {
+		// TODO: Design activities API / Frontend / ... (create those tickets)
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
