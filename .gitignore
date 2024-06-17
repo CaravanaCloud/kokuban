@@ -21,3 +21,5 @@
 go.work
 
 .aws-sam
+kokuban/kokuban
+kokuban/main

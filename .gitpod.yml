@@ -1,7 +1,15 @@
 image:
   file: .gitpod.Containerfile
 
+tasks:
+  - init: |
+      cd kokuban
+      go build main.go
+    command: |
+      cd kokuban
+      go run main.go
+
 ports:
-  - port: 3000
+  - port: 8080
     visibility: public
     onOpen: ignore
